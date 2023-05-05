@@ -1,5 +1,5 @@
 {
-  "name": "storybot",
+  "name": "storybot-ai",
   "version": "1.0.0",
   "description": "AI Generated User Stories from your CLI",
   "main": "./bin/story.js",

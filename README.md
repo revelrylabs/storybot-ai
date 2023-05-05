@@ -7,7 +7,7 @@ An AI Powered CLI tool to generate detailed and well formatted User Stories. It 
 ### Install StoryBot
 
 ```
-npm install -g storybot
+npm install -g storybot-ai
 ```
 
 ### OpenAI API Keys
