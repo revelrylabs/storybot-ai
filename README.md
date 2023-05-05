@@ -25,5 +25,43 @@ Use the `npx gen.story` command to start generating user stories. The first argu
 #### Example
 
 ```
-npx gen.story "Magic Link Auth"
+❯ npx gen.story "MFA"
+
+
+We can work with that...
+
+
+
+## Background
+Multi-factor authentication (MFA) is an important security feature that helps protect user accounts from unauthorized access. It requires users to provide two or more pieces of evidence (or factors) to verify their identity. Implementing MFA will help ensure that only authorized users can access the application.
+
+## Scenario - User Enables MFA
+- [ ] User is able to navigate to the MFA settings page
+- [ ] User is able to select an MFA authentication method (e.g. SMS, email, etc.)
+- [ ] User is able to enter their authentication credentials (e.g. phone number, email address, etc.)
+- [ ] User is able to confirm their authentication credentials
+- [ ] User is able to enable MFA
+- [ ] User is able to see a success message confirming that MFA has been enabled
+
+## Scenario - User Disables MFA
+- [ ] User is able to navigate to the MFA settings page
+- [ ] User is able to select an MFA authentication method (e.g. SMS, email, etc.)
+- [ ] User is able to enter their authentication credentials (e.g. phone number, email address, etc
+
+==========================================================
+
+
+Would you like to create an issue in GitHub? (NOTE: This requires the GitHub CLI. See https://github.com/cli/cli#installation if you don't have it.) y/n  
+
+y
+What you like to call this issue?
+
+Feature / Auth - MFA
+Enter the `organization/repo` (e.g. `revelrylabs/ai`) for this issue: 
+
+revelrylabs/ai
+
+
+Continue from your browswer to finish adding your issue to to revelrylabs/ai! 🤘
 ```
+
