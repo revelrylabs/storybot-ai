@@ -4,9 +4,6 @@
   "description": "AI Generated User Stories from your CLI",
   "main": "./bin/story.js",
   "type": "module",
-  "scripts": {
-    "test": "test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/revelrylabs/storybot.git"
@@ -20,7 +17,11 @@
     "ChatGPT",
     "OpenAI"
   ],
-  "author": "revelrylabs",
+  "author": {
+    "name": "Revelry Labs",
+    "email": "support@revelry.co",
+    "url": "https://revelry.co"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/revelrylabs/storybot/issues"
@@ -31,7 +32,12 @@
   "homepage": "https://github.com/revelrylabs/storybot#readme",
   "dependencies": {
     "chalk": "^5.2.0",
-    "dotenv": "^16.0.3",
     "langchain": "^0.0.68"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Daniel Andrews",
+      "email": "daniel@revelry.co"
+    }
+  ]
 }
