@@ -36,6 +36,13 @@ There are a few additional options you can pass to `gen.story` to further tailor
 
 We can work with that...
 
+     /\  __________                   .__                           .__ 
+    / /  \______   \ _______  __ ____ |  |_______ ___.__.    _____  |__|
+   / /    |       _// __ \  \/ // __ \|  |\_  __ <   |  |    \__  \ |  |
+  / /     |    |   \  ___/\   /\  ___/|  |_|  | \/\___  |     / __ \|  |
+ / /      |____|_  /\___  >\_/  \___  >____/__|   / ____| /\ (____  /__|
+ \/              \/     \/          \/            \/      \/      \/    
+
 
 
 ## Background
@@ -63,7 +70,7 @@ y
 What you like to call this issue?
 
 Feature / Auth - MFA
-Enter the `organization/repo` (e.g. `revelrylabs/ai`) for this issue: 
+Enter the `organization/repo` (e.g. `revelrylabs/storybot-ai`) for this issue: 
 
 revelrylabs/ai
 
