@@ -39,10 +39,7 @@ const parseArgs = () => {
   }
 
   const contextIndex = process.argv.indexOf("--context");
-  const contextText =
-    contextIndex > -1
-      ? process.argv[contextIndex + 1]
-      : "";
+  const contextText = contextIndex > -1 ? process.argv[contextIndex + 1] : "";
 
   return { featureText, techStackText, contextText };
 };
