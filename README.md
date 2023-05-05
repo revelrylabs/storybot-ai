@@ -12,7 +12,7 @@ npm install -g storybot-ai
 
 ### OpenAI API Keys
 
-In order for StoryBot to do the magic, it will need access to OpenAI's data models. This requires an API Key from OpenAI, which requires you to sign up for an account at https://platform.openai.com/signup. Once you have an OpenAI account, you can get an API Key here: https://platform.openai.com/account/api-keys. You can then export the environment variable in your terminal with `export OPEN_API_KEY="sk-abcdefghijklmnopqrstuvwxyz"` (replace with your actual api key).
+In order for StoryBot to do the magic, it will need access to OpenAI's data models. This requires an API Key from OpenAI, which requires you to sign up for an account at https://platform.openai.com/signup. Once you have an OpenAI account, you can get an API Key here: https://platform.openai.com/account/api-keys. You can then export the environment variable in your terminal with `export OPENAI_API_KEY="sk-abcdefghijklmnopqrstuvwxyz"` (replace with your actual api key).
 
 ### Install GitHub CLI (optional)
 
