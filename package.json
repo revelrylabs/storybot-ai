@@ -1,6 +1,6 @@
 {
   "name": "storybot-ai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI Generated User Stories from your CLI",
   "main": "./bin/story.js",
   "type": "module",
@@ -22,7 +22,7 @@
     "email": "support@revelry.co",
     "url": "https://revelry.co"
   },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/revelrylabs/storybot/issues"
   },

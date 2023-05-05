@@ -74,8 +74,7 @@ const chat = new OpenAI({
   callbacks: [
     {
       handleLLMNewToken(token) {
-        issueContent = issueContent += token;
-
+        issueContent = issueContent += token.replace(/"/g, '\\"');
         process.stdout.write(token);
       },
     },
