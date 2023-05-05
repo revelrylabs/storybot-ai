@@ -22,7 +22,13 @@ If you want to be able to insert issues directly into GitHub from your command l
 
 Use the `npx gen.story` command to start generating user stories. The first argument is required and should be a string describing the feature we are writing a user story for. 
 
-#### Example
+There are a few additional options you can pass to `gen.story` to further tailor your responses:
+| Flag | Description |
+| ---- | ----------- |
+| `--context` | Add some additional context around the feature you are writing a user story for. |
+| `--stack` | Specify the tech stack that the user story will need to be implemented in. |
+
+#### Examples
 
 ```
 ❯ npx gen.story "MFA"
@@ -64,4 +70,5 @@ revelrylabs/ai
 
 Continue from your browswer to finish adding your issue to to revelrylabs/ai! 🤘
 ```
+
 

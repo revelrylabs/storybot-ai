@@ -41,7 +41,7 @@ const parseArgs = () => {
   const contextText =
     contextIndex > -1
       ? process.argv[contextIndex + 1]
-      : "Context: Act as a product manager at a software development company. Write a user story for the 'Feature' defined below. Explain in detailed steps how to implement this in a section called 'Implementation Notes' at the end of the story. Please make sure that the implementation notes are complete; do not leave any incomplete sentences.";
+      : "";
 
   return { featureText, techStackText, contextText };
 };
@@ -49,7 +49,7 @@ const parseArgs = () => {
 const generatePrompt = () => {
   const { featureText, techStackText, contextText } = parseArgs();
 
-  return `${contextText}
+  return `Context: Act as a product manager at a software development company. Write a user story for the 'Feature' defined below. Explain in detailed steps how to implement this in a section called 'Implementation Notes' at the end of the story. Please make sure that the implementation notes are complete; do not leave any incomplete sentences. ${contextText}
 
   ${featureText}
 
