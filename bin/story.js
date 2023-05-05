@@ -7,6 +7,7 @@ import chalk from "chalk";
 const { OPENAI_API_KEY } = process.env;
 const isYes = (str) => str == "Y" || str == "y";
 const logBold = (msg) => console.log(chalk.bold(msg));
+const logRevelry = (msg) => console.log(chalk.green.bold(msg));
 const logSuccess = (msg) => console.log(chalk.green.bold(msg));
 const logWarning = (msg) => console.error(chalk.yellow.bold(msg));
 const logError = (msg) => console.error(chalk.red.bold(`ERROR: ${msg}`));
@@ -82,6 +83,14 @@ const chat = new OpenAI({
 });
 
 logBold("\n\nWe can work with that...\n");
+logRevelry(`
+     /\\  __________                   .__                           .__ 
+    / /  \\______   \\ _______  __ ____ |  |_______ ___.__.    _____  |__|
+   / /    |       _// __ \\  \\/ // __ \\|  |\\_  __ <   |  |    \\__  \\ |  |
+  / /     |    |   \\  ___/\\   /\\  ___/|  |_|  | \\/\\___  |     / __ \\|  |
+ / /      |____|_  /\\___  >\\_/  \\___  >____/__|   / ____| /\\ (____  /__|
+ \\/              \\/     \\/          \\/            \\/      \\/      \\/    
+`);
 
 await chat.call(prompt);
 
@@ -106,7 +115,7 @@ try {
       "What you like to call this issue?\n\n"
     );
     const repo = await askQuestion(
-      "Enter the `organization/repo` (e.g. `revelrylabs/ai`) for this issue: \n\n"
+      "Enter the `organization/repo` (e.g. `revelrylabs/storybot-ai`) for this issue: \n\n"
     );
 
     exec(
