@@ -72,10 +72,10 @@ What you like to call this issue?
 Feature / Auth - MFA
 Enter the `organization/repo` (e.g. `revelrylabs/storybot-ai`) for this issue: 
 
-revelrylabs/ai
+revelrylabs/storybot-ai
 
 
-Continue from your browswer to finish adding your issue to to revelrylabs/ai! 🤘
+Continue from your browswer to finish adding your issue to to revelrylabs/storybot-ai! 🤘
 ```
 
 
