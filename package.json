@@ -1,0 +1,37 @@
+{
+  "name": "storybot",
+  "version": "1.0.0",
+  "description": "AI Generated User Stories from your CLI",
+  "main": "./bin/story.js",
+  "type": "module",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revelrylabs/storybot.git"
+  },
+  "keywords": [
+    "User",
+    "Stories",
+    "GitHub",
+    "CLI",
+    "AI",
+    "ChatGPT",
+    "OpenAI"
+  ],
+  "author": "revelrylabs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/revelrylabs/storybot/issues"
+  },
+  "bin": {
+    "gen.story": "./bin/story.js"
+  },
+  "homepage": "https://github.com/revelrylabs/storybot#readme",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "dotenv": "^16.0.3",
+    "langchain": "^0.0.68"
+  }
+}
