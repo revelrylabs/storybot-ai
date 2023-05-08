@@ -1,18 +1,16 @@
 #!/usr/bin/env node
 import readline from "readline/promises";
 import { OpenAI } from "langchain/llms/openai";
+import { BufferMemory } from "langchain/memory";
+import { ConversationChain } from "langchain/chains";
 import { exec } from "child_process";
 import chalk from "chalk";
 
 const { OPENAI_API_KEY } = process.env;
-const isYes = (str) => str == "Y" || str == "y";
+const isYes = (str) => ["", "y", "yes"].includes(str.toLowerCase());
 const logBold = (msg) => console.log(chalk.bold(msg));
-const logRevelry = (msg) => console.log(chalk.green.bold(msg));
 const logSuccess = (msg) => console.log(chalk.green.bold(msg));
-const logWarning = (msg) => console.error(chalk.yellow.bold(msg));
 const logError = (msg) => console.error(chalk.red.bold(`ERROR: ${msg}`));
-
-let issueContent = "";
 
 const parseArgs = () => {
   if (!OPENAI_API_KEY) {
@@ -44,7 +42,7 @@ const parseArgs = () => {
   return { featureText, techStackText, contextText };
 };
 
-const generatePrompt = () => {
+const userStoryPrompt = () => {
   const { featureText, techStackText, contextText } = parseArgs();
 
   return `Context: Act as a product manager at a software development company. Write a user story for the 'Feature' defined below. Explain in detailed steps how to implement this in a section called 'Implementation Notes' at the end of the story. Please make sure that the implementation notes are complete; do not leave any incomplete sentences. ${contextText}
@@ -63,56 +61,22 @@ const generatePrompt = () => {
   }`;
 };
 
-const prompt = generatePrompt();
+const askQuestion = (rl, question) => rl.question(chalk.bold(question));
 
-const chat = new OpenAI({
-  openAIApiKey: OPENAI_API_KEY,
-  streaming: true,
-  temperature: 0,
-  callbacks: [
-    {
-      handleLLMNewToken(token) {
-        issueContent = issueContent += token.replace(/"/g, '\\"');
-        process.stdout.write(token);
-      },
-    },
-  ],
-});
-
-logBold("\n\nWe can work with that...\n");
-logRevelry(`
-     /\\  __________                   .__                           .__ 
-    / /  \\______   \\ _______  __ ____ |  |_______ ___.__.    _____  |__|
-   / /    |       _// __ \\  \\/ // __ \\|  |\\_  __ <   |  |    \\__  \\ |  |
-  / /     |    |   \\  ___/\\   /\\  ___/|  |_|  | \\/\\___  |     / __ \\|  |
- / /      |____|_  /\\___  >\\_/  \\___  >____/__|   / ____| /\\ (____  /__|
- \\/              \\/     \\/          \\/            \\/      \\/      \\/    
-`);
-
-await chat.call(prompt);
-
-console.log(
-  "\n\n==========================================================\n\n"
-);
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-const askQuestion = (question) => rl.question(chalk.bold(question));
-
-try {
+const maybeCreateIssue = async (rl, issueContent) => {
   const shouldCreateIssue = await askQuestion(
-    "Would you like to create an issue in GitHub? (NOTE: This requires the GitHub CLI. See https://github.com/cli/cli#installation if you don't have it.) y/n  \n\n"
+    rl,
+    "Would you like to create an issue in GitHub? (NOTE: This requires the GitHub CLI. See https://github.com/cli/cli#installation if you don't have it.)  "
   );
 
   if (isYes(shouldCreateIssue)) {
     const issueTitle = await askQuestion(
-      "What you like to call this issue?\n\n"
+      rl,
+      "What you like to call this issue?  "
     );
     const repo = await askQuestion(
-      "Enter the `organization/repo` (e.g. `revelrylabs/storybot-ai`) for this issue: \n\n"
+      rl,
+      "Enter the `organization/repo` (e.g. `revelrylabs/storybot-ai`) for this issue:  "
     );
 
     exec(
@@ -129,9 +93,75 @@ try {
       }
     );
   } else {
-    logSuccess("\n\nOK, all done! 🤘");
     rl.close();
+    logSuccess("Ok, all done! 🤘");
   }
-} catch (err) {
-  logError(err);
-}
+};
+
+const maybeFinish = async (issueContent, chain) => {
+  try {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    const continueConversation = await askQuestion(
+      rl,
+      "Would you like to make any changes to this user story?"
+    );
+    if (isYes(continueConversation)) {
+      const changesRequested = await askQuestion(
+        rl,
+        "Tell me what you want to change.  \n\n"
+      );
+      rl.close();
+
+      await sendPrompt(chain, `I need to make some changes to the user story you just output. Please output a new user story with the following adjustments: ${changesRequested}`);
+
+      maybeFinish(issueContent, chain);
+    } else {
+      maybeCreateIssue(rl, issueContent);
+    }
+  } catch (err) {
+    rl.close();
+    logError(err);
+  }
+};
+
+const sendPrompt = async (chain, prompt) => {
+  const { response } = await chain.call({input: prompt});
+
+  console.log(
+    "\n\n==========================================================\n\n"
+  );
+
+  // Escape double quotes so that it can be sent to to github via GH CLI
+  return response.replace(/"/g, '\\"');
+};
+
+logSuccess(`
+     /\\  __________                   .__                           .__ 
+    / /  \\______   \\ _______  __ ____ |  |_______ ___.__.    _____  |__|
+   / /    |       _// __ \\  \\/ // __ \\|  |\\_  __ <   |  |    \\__  \\ |  |
+  / /     |    |   \\  ___/\\   /\\  ___/|  |_|  | \\/\\___  |     / __ \\|  |
+ / /      |____|_  /\\___  >\\_/  \\___  >____/__|   / ____| /\\ (____  /__|
+ \\/              \\/     \\/          \\/            \\/      \\/      \\/    
+`);
+logBold("\n\nWe can work with that...\n");
+
+const model = new OpenAI({
+  streaming: true,
+  temperature: 0,
+  callbacks: [
+    {
+      handleLLMNewToken(token) {
+        process.stdout.write(token);
+      },
+    },
+  ],
+});
+const memory = new BufferMemory();
+const chain = new ConversationChain({ llm: model, memory: memory });
+const issueContent = await sendPrompt(chain, userStoryPrompt());
+
+maybeFinish(issueContent, chain);
