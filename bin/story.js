@@ -8,7 +8,7 @@ import chalk from "chalk";
 import ora from 'ora';
 
 const { OPENAI_API_KEY } = process.env;
-const isYes = (str) => ["", "y", "yes"].includes(str.toLowerCase());
+const isYes = (str) => ["", "y", "yes"].includes(str.trim().toLowerCase());
 const logBold = (msg) => console.log(chalk.bold(msg));
 const logSuccess = (msg) => console.log(chalk.green.bold(msg));
 const logError = (msg) => console.error(chalk.red.bold(`ERROR: ${msg}`));
@@ -110,7 +110,7 @@ const maybeFinish = async (issueContent, chain) => {
 
     const continueConversation = await askQuestion(
       rl,
-      "Would you like to make any changes to this user story?"
+      "Would you like to make any changes to this user story?  "
     );
     if (isYes(continueConversation)) {
       const changesRequested = await askQuestion(
