@@ -5,12 +5,14 @@ import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { exec } from "child_process";
 import chalk from "chalk";
+import ora from 'ora';
 
 const { OPENAI_API_KEY } = process.env;
 const isYes = (str) => ["", "y", "yes"].includes(str.toLowerCase());
 const logBold = (msg) => console.log(chalk.bold(msg));
 const logSuccess = (msg) => console.log(chalk.green.bold(msg));
 const logError = (msg) => console.error(chalk.red.bold(`ERROR: ${msg}`));
+let spinner = null;
 
 const parseArgs = () => {
   if (!OPENAI_API_KEY) {
@@ -25,6 +27,7 @@ const parseArgs = () => {
     logBold(
       "\nPlease provide a brief desciption of the story you want to generate as the first argument."
     );
+
     process.exit(1);
   }
 
@@ -147,7 +150,8 @@ logSuccess(`
  / /      |____|_  /\\___  >\\_/  \\___  >____/__|   / ____| /\\ (____  /__|
  \\/              \\/     \\/          \\/            \\/      \\/      \\/    
 `);
-logBold("\n\nWe can work with that...\n");
+
+spinner = ora({spinner: "fistBump"}).start();
 
 const model = new OpenAI({
   streaming: true,
@@ -155,6 +159,11 @@ const model = new OpenAI({
   callbacks: [
     {
       handleLLMNewToken(token) {
+        if (spinner) {
+          spinner.stop();
+          spinner = null
+        }
+
         process.stdout.write(token);
       },
     },
