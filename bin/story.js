@@ -45,7 +45,7 @@ const parseArgs = () => {
   return { featureText, techStackText, contextText };
 };
 
-const userStoryPrompt = () => {
+const generateInitialPrompt = () => {
   const { featureText, techStackText, contextText } = parseArgs();
 
   return `Context: Act as a product manager at a software development company. Write a user story for the 'Feature' defined below. Explain in detailed steps how to implement this in a section called 'Implementation Notes' at the end of the story. Please make sure that the implementation notes are complete; do not leave any incomplete sentences. ${contextText}
@@ -142,6 +142,8 @@ const sendPrompt = async (chain, prompt) => {
   return response.replace(/"/g, '\\"');
 };
 
+const initialPrompt = generateInitialPrompt()
+
 logSuccess(`
      /\\  __________                   .__                           .__ 
     / /  \\______   \\ _______  __ ____ |  |_______ ___.__.    _____  |__|
@@ -171,6 +173,6 @@ const model = new OpenAI({
 });
 const memory = new BufferMemory();
 const chain = new ConversationChain({ llm: model, memory: memory });
-const issueContent = await sendPrompt(chain, userStoryPrompt());
+const issueContent = await sendPrompt(chain, initialPrompt);
 
 maybeFinish(issueContent, chain);
