@@ -119,9 +119,9 @@ const maybeFinish = async (issueContent, chain) => {
       );
       rl.close();
 
-      await sendPrompt(chain, `I need to make some changes to the user story you just output. Please output a new user story with the following adjustments: ${changesRequested}`);
+      const newIssueContent = await sendPrompt(chain, `I need to make some changes to the user story you just output. Please output a new user story with the following adjustments: ${changesRequested}`);
 
-      maybeFinish(issueContent, chain);
+      maybeFinish(newIssueContent, chain);
     } else {
       maybeCreateIssue(rl, issueContent);
     }
