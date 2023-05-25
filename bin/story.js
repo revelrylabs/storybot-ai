@@ -157,13 +157,15 @@ spinner = ora({spinner: "fistBump"}).start();
 
 const model = new OpenAI({
   streaming: true,
-  temperature: 0,
+  temperature: 0.6,
+  modelName: "gpt-3.5-turbo",
+  maxTokens: 512,
   callbacks: [
     {
       handleLLMNewToken(token) {
         if (spinner) {
           spinner.stop();
-          spinner = null
+          spinner = null;
         }
 
         process.stdout.write(token);

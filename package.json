@@ -1,6 +1,6 @@
 {
   "name": "storybot-ai",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "AI Generated User Stories from your CLI",
   "main": "./bin/story.js",
   "type": "module",
